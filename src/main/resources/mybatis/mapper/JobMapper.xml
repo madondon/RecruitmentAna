@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdbc.mapper.JobMapper">
+
+    <!--查询指定id有信息-->
+    <select id="getJobInfoById" resultType="com.example.jdbc.pojo.Job" parameterType="String">
+       select *
+       from jobinfo
+       where jobid=#{jobid}
+    </select>
+
+    <!--查询所有信息-->
+    <select id="queryJobInfo" resultType="com.example.jdbc.pojo.Job">
+       select *
+       from jobinfo
+    </select>
+
+    <!--删除信息-->
+    <delete id="deleteJobInfoById" parameterType="String">
+        delete
+        from jobinfo
+        where jobid=#{jobid}
+    </delete>
+
+    <!--修改信息-->
+    <update id="updateJobInfoById" parameterType="com.example.jdbc.pojo.Job">
+      update jobinfo
+      set  name=#{name},money=#{money},workarea=#{workarea},coname=#{coname},cotype=#{cotype},cosize=#{cosize},jobwelf=#{jobwelf},experience=#{experience},degreefrom=#{degreefrom},
+      num=#{num},content=#{content},updatedate=#{updatedate}
+      where jobid=#{jobid}
+    </update>
+
+    <!--重置-->
+    <update id="reset" >
+      update jobinfo
+      set  coled=0,deled=0
+    </update>
+
+    <!--初始化Del-->
+    <update id="initDel" parameterType="String">
+     update jobinfo,delivery
+     set jobinfo.deled=1
+     where delivery.userid=#{userid} and jobinfo.jobid=delivery.jobId
+    </update>
+
+    <!--初始化col-->
+    <update id="initCol" parameterType="String">
+     update jobinfo,collection
+     set jobinfo.coled=1
+     where collection.userid=#{userid} and jobinfo.jobid=collection.jobId
+    </update>
+
+    <!--查询col计数-->
+    <select id="getColNum" resultType="int" parameterType="String">
+SELECT COUNT(*) FROM collection
+WHERE userid=#{userid}
+    </select>
+
+    <!--查询del计数-->
+    <select id="getDelNum" resultType="int" parameterType="String">
+SELECT COUNT(*) FROM delivery
+WHERE userid=#{userid}
+    </select>
+
+    <!--筛选-->
+    <select id="selectJob" resultType="com.example.jdbc.pojo.Job" parameterType="String">
+select *
+from jobinfo
+where name like CONCAT('%',#{jobname,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!--复杂筛选-->
+    <select id="selectInfo" resultType="com.example.jdbc.pojo.Job" parameterType="String">
+select *
+from jobinfo
+ where workarea like CONCAT('%',#{arg0,jdbcType=VARCHAR},'%') and money like CONCAT('%',#{arg1,jdbcType=VARCHAR},'%')
+ and experience like CONCAT('%',#{arg2,jdbcType=VARCHAR},'%') and degreefrom like CONCAT('%',#{arg3,jdbcType=VARCHAR},'%')
+ and cotype like CONCAT('%',#{arg4,jdbcType=VARCHAR},'%')  and cosize like CONCAT('%',#{arg5,jdbcType=VARCHAR},'%')
+    </select>
+
+
+
+
+
+
+    <!--修改投递时间-->
+    <update id="updateDelTime" parameterType="com.example.jdbc.pojo.Delivery">
+      update delivery
+      set updatedate=#{updatedate}
+      where jobid=#{jobid} and userid=#{userid}
+    </update>
+
+    <!-- 添加信息-->
+    <insert id="addDelInfo" useGeneratedKeys="true"
+            parameterType="com.example.jdbc.pojo.Job">
+        insert into
+        delivery(jobid,userid,name,money,workarea,coname,updatedate)
+        values (#{jobid},#{userid},#{name},#{money},#{workarea},#{coname},#{updatedate})
+    </insert>
+
+    <!--删除投递信息-->
+    <delete id="deleteDelById" parameterType="String">
+        delete
+        from delivery
+        where jobid=#{arg0} and userid=#{arg1}
+    </delete>
+
+    <!--修改回收-->
+    <update id="updateRecycle" parameterType="com.example.jdbc.pojo.Delivery">
+      update delivery
+      set recycle=#{recycle}
+      where jobid=#{jobid} and userid=#{userid}
+    </update>
+
+    <!--获取投递信息-->
+    <select id="getDelById" resultType="com.example.jdbc.pojo.Delivery" parameterType="String">
+       select *
+       from delivery
+       where jobid=#{arg0} and userid=#{arg1}
+    </select>
+
+    <!--获取指定用户投递信息列表-->
+    <select id="getDelByUserId" resultType="com.example.jdbc.pojo.Delivery" parameterType="String">
+       select *
+       from delivery
+       where userid=#{arg0}
+    </select>
+
+    <!--初始化投递-->
+    <update id="initDelStatus">
+update delivery
+set delivery.status=0
+where delivery.jobid
+NOT IN (SELECT jobinfo.jobid FROM jobinfo);
+    </update>
+
+
+
+
+    <!--筛选-->
+    <select id="selectCol" resultType="com.example.jdbc.pojo.Collection" parameterType="String">
+select *
+from collection
+where name like CONCAT('%',#{jobname,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!-- 添加收藏信息-->
+    <insert id="addColInfo" useGeneratedKeys="true"
+            parameterType="com.example.jdbc.pojo.Collection">
+        insert into
+        collection(jobid,userid,coid,name,money,workarea,coname,cotype,cosize,jobwelf,experience,degreefrom,num,content,updatedate)
+        values (#{jobid},#{userid},#{coid},#{name},#{money},#{workarea},#{coname},#{cotype},#{cosize},#{jobwelf},#{experience},#{degreefrom},#{num},#{content},#{updatedate})
+    </insert>
+
+    <!--删除收藏信息-->
+    <delete id="deleteColById" parameterType="String">
+        delete
+        from collection
+        where jobid=#{arg0} and userid=#{arg1}
+    </delete>
+
+    <!--获取收藏信息-->
+    <select id="getColById" resultType="com.example.jdbc.pojo.Collection" parameterType="String">
+       select *
+       from collection
+       where jobid=#{arg0} and userid=#{arg1}
+    </select>
+
+    <!--获取指定用户收藏信息列表-->
+    <select id="getColByUserId" resultType="com.example.jdbc.pojo.Collection" parameterType="String">
+       select *
+       from collection
+       where userid=#{arg0}
+    </select>
+
+    <!--初始化Del-->
+    <update id="initColDel" parameterType="String">
+     update collection,delivery
+     set collection.deled=1
+     where delivery.userid=#{userid} and collection.jobid=delivery.jobId
+    </update>
+
+    <!--初始化收藏-->
+    <update id="initColStatus">
+update collection
+set collection.status=0
+where collection.jobid
+NOT IN (SELECT jobinfo.jobid FROM jobinfo);
+    </update>
+
+    <!--重置-->
+    <update id="resetCol" >
+      update collection
+      set  deled=0
+    </update>
+
+</mapper>

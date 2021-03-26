@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdbc.mapper.UserMapper">
+
+    <select id="getUserInfoById" resultType="com.example.jdbc.pojo.User" parameterType="int">
+       select *
+       from user
+       where id=#{id}
+    </select>
+
+    <!--查询所有信息-->
+    <select id="queryUserInfo" resultType="com.example.jdbc.pojo.User">
+       select *
+       from user
+    </select>
+
+    <!--修改图片路径-->
+    <update id="updatePicture" parameterType="com.example.jdbc.pojo.User">
+      update user
+      set picture=#{picture}
+      where id=#{id}
+    </update>
+
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="com.example.jdbc.pojo.User">
+      update user
+      set password=#{password}
+      where id=#{id}
+    </update>
+
+    <!--修改管理员-->
+    <update id="updateAdmin" parameterType="com.example.jdbc.pojo.User">
+      update user
+      set admin=#{admin}
+      where id=#{id}
+    </update>
+
+    <!--修改信息-->
+    <update id="updateUserInfoById" parameterType="com.example.jdbc.pojo.User">
+      update user
+      set name=#{name},identity=#{identity},sex=#{sex},education=#{education},birthday=#{birthday},phone=#{phone},mail=#{mail},wordKey=#{wordKey}
+      where id=#{id}
+    </update>
+
+    <!-- 添加信息-->
+    <insert id="addUserInfo" useGeneratedKeys="true"
+            parameterType="com.example.jdbc.pojo.User">
+        insert into
+        user(id,password,name,identity,sex,education,birthday,phone,mail,wordKey)
+        values (#{id},#{password},#{name},#{identity},#{sex},#{education},#{birthday},#{phone},#{mail},#{wordKey})
+    </insert>
+
+    <!--删除信息-->
+    <delete id="deleteUserInfoById" parameterType="int">
+        delete
+        from user
+        where id=#{id}
+    </delete>
+
+</mapper>
