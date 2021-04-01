@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jdbc.mapper.AnaMapper">
+
+
+
+    <!--查询所有信息-->
+    <select id="getAna1" resultType="com.example.jdbc.pojo.ana1">
+       select * from ana1 ORDER BY name,field(degreefrom, '中专', '高中','大专', '本科','硕士')
+    </select>
+
+    <select id="getAna2" resultType="com.example.jdbc.pojo.ana2">
+       select * from ana2
+    </select>
+
+    <select id="getAna3" resultType="com.example.jdbc.pojo.ana3">
+       select * from ana3
+    </select>
+
+    <select id="getAna4" resultType="com.example.jdbc.pojo.ana4">
+       select * from ana4
+    </select>
+
+    <select id="getAna5" resultType="com.example.jdbc.pojo.ana5">
+       select * from ana5
+    </select>
+
+    <select id="getAna6" resultType="com.example.jdbc.pojo.ana6">
+       select * from ana6
+    </select>
+
+    <select id="getAna7" resultType="com.example.jdbc.pojo.ana7">
+       select * from ana7
+    </select>
+
+    <select id="getAna8" resultType="com.example.jdbc.pojo.ana8">
+       select * from ana8
+    </select>
+
+    <select id="getAna9" resultType="com.example.jdbc.pojo.ana9">
+       select * from ana9
+    </select>
+
+    <select id="getAna10" resultType="com.example.jdbc.pojo.ana10">
+       select * from ana10
+    </select>
+</mapper>

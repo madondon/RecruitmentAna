@@ -1,17 +1,22 @@
 package com.example.jdbc.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.jdbc.pojo.*;
+import com.example.jdbc.pojo.Collection;
+import com.example.jdbc.service.MailService;
+import com.example.jdbc.service.impl.AnaServiceImpl;
 import com.example.jdbc.service.impl.JobServiceImpl;
 import com.example.jdbc.service.impl.UserServiceImpl;
+import com.zhenzi.sms.ZhenziSmsClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.mail.javamail.JavaMailSender;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 
 
 @CrossOrigin(origins = "*",maxAge = 3600)//跨域
@@ -21,12 +26,76 @@ public class Controller {
     UserServiceImpl userService;
     @Autowired
     JobServiceImpl jobService;
-
-
+    @Autowired
+    AnaServiceImpl anaService;
+    @Autowired
+    private MailService mailService;
 
 
     /**
-     * 工具类
+     * 图表类
+     */
+    @CrossOrigin(origins = "*",maxAge = 3600)//跨域
+    @RestController
+    public class AnaController {
+        /**
+         * 查询所有工作信息
+         */
+        @GetMapping("/getAna1")
+        public List getAna1() {
+            return anaService.getAna1();
+        }
+
+        @GetMapping("/getAna2")
+        public List getAna2() {
+            return anaService.getAna2();
+        }
+
+        @GetMapping("/getAna3")
+        public List getAna3() {
+            return anaService.getAna3();
+        }
+
+        @GetMapping("/getAna4")
+        public List getAna4() {
+            return anaService.getAna4();
+        }
+
+        @GetMapping("/getAna5")
+        public List getAna5() {
+            return anaService.getAna5();
+        }
+
+        @GetMapping("/getAna6")
+        public List getAna6() {
+            return anaService.getAna6();
+        }
+
+        @GetMapping("/getAna7")
+        public List getAna7() {
+            return anaService.getAna7();
+        }
+
+        @GetMapping("/getAna8")
+        public List getAna8() {
+            return anaService.getAna8();
+        }
+
+        @GetMapping("/getAna9")
+        public List getAna9() {
+            return anaService.getAna9();
+        }
+
+        @GetMapping("/getAna10")
+        public List getAna10() {
+            return anaService.getAna10();
+        }
+
+    }
+
+
+    /**
+     * 工作类
      */
     @CrossOrigin(origins = "*",maxAge = 3600)//跨域
     @RestController
@@ -530,6 +599,12 @@ public class Controller {
     @CrossOrigin(origins = "*",maxAge = 3600)//跨域
     @RestController
     public class ToolController {
+        @GetMapping("/sendMail")
+        public String sendMail() {
+            String filePath="C:\\Users\\mdd\\Desktop\\新建 DOCX 文档.docx";
+            mailService.sendAttachmentsMail("a1224641706@163.com","带附件的邮件","有附件，请查收",filePath);
+            return "success";
+        }
 
         /**
          * 上传图片到本地文件夹
@@ -550,5 +625,40 @@ public class Controller {
             System.out.println(IpToAddressUtil.getCityInfo());
             return IpToAddressUtil.getCityInfo();
         }
+
+        //短信平台相关参数
+        //这个不用改
+        private String apiUrl = "https://sms_developer.zhenzikj.com";
+        //榛子云系统上获取
+        private String appId = "108529";
+        private String appSecret = "e1008b7c-f74e-4f00-bead-0a1f57483e2b";
+
+        @ResponseBody
+        @GetMapping("/fitness/code")
+        public boolean getCode(@RequestParam("memPhone") String memPhone, HttpSession httpSession){
+            try {
+                //随机生成验证码
+                String code = String.valueOf(new Random().nextInt(999999));
+                //将验证码通过榛子云接口发送至手机
+                ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("number",memPhone);
+                params.put("templateId", "4353");
+                String[] templateParams = new String[2];
+                templateParams[0] = code;
+                templateParams[1] = "5分钟";
+                params.put("templateParams", templateParams);
+                String result = client.send(params);
+                JSONObject json = JSONObject.parseObject(result);
+                if (json.getIntValue("code")!=0){//发送短信失败
+                    return  false;
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
     }
 }

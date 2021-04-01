@@ -1,10 +1,21 @@
 
 spring:
+  mail:
+    host: smtp.163.com
+    username: a1224641706@163.com
+    password: WOAXNAELFYMPMDAE
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+          enable: true
+          required: true
   datasource:
     druid:
       username: root
       password: 123456
-      url: jdbc:mysql://localhost:3306/job?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://localhost:3306/sys?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
       #      driver-class-name: com.mysql.jdbc.Driver
       initialSize: 5
       minIdle: 5
