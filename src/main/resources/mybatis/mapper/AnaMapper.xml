@@ -5,14 +5,18 @@
 <mapper namespace="com.example.jdbc.mapper.AnaMapper">
 
 
-
+    <update id="addAddress" parameterType="com.example.jdbc.pojo.ana10">
+      update ana10
+      set  lng=#{lng},lat=#{lat}
+      where name=#{name}
+    </update>
     <!--查询所有信息-->
     <select id="getAna1" resultType="com.example.jdbc.pojo.ana1">
        select * from ana1 ORDER BY name,field(degreefrom, '中专', '高中','大专', '本科','硕士')
     </select>
 
     <select id="getAna2" resultType="com.example.jdbc.pojo.ana2">
-       select * from ana2
+       select money from ana2 ORDER BY field(degreefrom, '中专', '高中','大专', '本科','硕士','博士'),experience
     </select>
 
     <select id="getAna3" resultType="com.example.jdbc.pojo.ana3">
@@ -20,7 +24,7 @@
     </select>
 
     <select id="getAna4" resultType="com.example.jdbc.pojo.ana4">
-       select * from ana4
+       select * from ana4 ORDER BY name,field(degreefrom, '中专', '高中','大专', '本科','硕士')
     </select>
 
     <select id="getAna5" resultType="com.example.jdbc.pojo.ana5">
@@ -32,11 +36,11 @@
     </select>
 
     <select id="getAna7" resultType="com.example.jdbc.pojo.ana7">
-       select * from ana7
+       select * from ana7 ORDER BY field(coname,'腾讯', '字节跳动', '京东', '华为', '中国移动', '网易','阿里巴巴','滴滴'),field(degreefrom, '中专', '高中','大专', '本科','硕士','博士')
     </select>
 
     <select id="getAna8" resultType="com.example.jdbc.pojo.ana8">
-       select * from ana8
+       select * from ana8 ORDER BY field(name, '中专', '高中','大专', '本科','硕士','博士'),field(companysize, '少于50人', '50-150人','150-500人', '500-1000人','1000-5000人','5000-10000人','10000人以上')
     </select>
 
     <select id="getAna9" resultType="com.example.jdbc.pojo.ana9">
@@ -44,6 +48,6 @@
     </select>
 
     <select id="getAna10" resultType="com.example.jdbc.pojo.ana10">
-       select * from ana10
+       select * from ana10 ORDER BY value
     </select>
 </mapper>

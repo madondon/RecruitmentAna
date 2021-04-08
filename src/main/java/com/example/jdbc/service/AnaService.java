@@ -6,6 +6,7 @@ import com.example.jdbc.pojo.*;
 import java.util.List;
 
 public interface AnaService {
+    boolean addAddress(ana10 ana);
 
     List<ana1> getAna1();
 

@@ -1,24 +1,42 @@
 package com.example.jdbc.pojo;
 
 public class ana10 {
-    private String  area;
-    private int count;
+    private String  name;
+    private int value;
+    private String  lng;
+    private String  lat;
 
     public ana10() {}
 
-    public String getArea() {
-        return area;
+    public String getName() {
+        return name;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getCount() {
-        return count;
+    public int getValue() {
+        return value;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 }

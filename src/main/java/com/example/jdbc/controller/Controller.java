@@ -8,6 +8,7 @@ import com.example.jdbc.service.impl.AnaServiceImpl;
 import com.example.jdbc.service.impl.JobServiceImpl;
 import com.example.jdbc.service.impl.UserServiceImpl;
 import com.zhenzi.sms.ZhenziSmsClient;
+import org.apache.commons.math3.analysis.function.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,26 @@ public class Controller {
     @CrossOrigin(origins = "*",maxAge = 3600)//跨域
     @RestController
     public class AnaController {
+
+        @GetMapping("/addAddress")
+        public String addAddress() throws InterruptedException {
+            List<ana10> list=anaService.getAna10();
+            int i=0;
+
+            for(ana10 ana : list) {
+                String add=Address.getCityInfo(ana.getName());
+                String lng = add.substring(0, add.indexOf("-"));
+                String lat = add.substring( add.indexOf("-")+1,add.length()-1);
+                ana10 ana10=new ana10();
+                ana10.setName(ana.getName());
+                ana10.setLng(lng);
+                ana10.setLat(lat);
+                anaService.addAddress(ana10);
+                Thread.sleep(1000);
+            }
+//            Address.getCityInfo(list.get(0).getName());
+        return "true";
+        }
         /**
          * 查询所有工作信息
          */
@@ -573,6 +594,25 @@ public class Controller {
         }
     }
 
+        /**
+         * 查找电话号码是否存在
+         */
+        @GetMapping("/getMessage/{number}")
+        public String getMessage(@PathVariable("number") String number) {
+            //判断数据库中是否存在号码
+            //存在则返回验证码
+            String code;
+            try {
+                User user=userService.getNumber(number);
+                System.out.println(user.getId());
+                code=getCode.getCode(number);
+                return code;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "该号码不存在，请检查号码";
+            }
+        }
+
     /**
      * 按照Id查询用户信息
      */
@@ -635,7 +675,7 @@ public class Controller {
 
         @ResponseBody
         @GetMapping("/fitness/code")
-        public boolean getCode(@RequestParam("memPhone") String memPhone, HttpSession httpSession){
+        public boolean getCode(@RequestParam("memPhone") String memPhone){
             try {
                 //随机生成验证码
                 String code = String.valueOf(new Random().nextInt(999999));

@@ -1,20 +1,25 @@
 package com.example.jdbc.pojo;
 
 public class ana3 {
-    private String  experience;
-    private int sum;
+    private int value;
+    private String  name;
+
 
     public ana3() {}
 
-    public String getExperience() { return experience; }
-
-    public void setExperience(String experience) { this.experience = experience; }
-
-    public double getSum() {
-        return sum;
+    public int getValue() {
+        return value;
     }
 
-    public void setSum(int sum) {
-        this.sum = sum;
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

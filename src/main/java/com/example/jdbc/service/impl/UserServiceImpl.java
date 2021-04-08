@@ -15,6 +15,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    @Override
+    public User getNumber(String number) { return userMapper.getNumber(number); }
 
     @Override
     public User getUserInfoById(int id) { return userMapper.getUserInfoById(id); }

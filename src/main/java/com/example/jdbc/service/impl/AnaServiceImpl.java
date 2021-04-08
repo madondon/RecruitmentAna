@@ -5,6 +5,7 @@ import com.example.jdbc.pojo.*;
 import com.example.jdbc.service.AnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,25 @@ public class AnaServiceImpl implements AnaService {
 
     @Autowired
     AnaMapper anaMapper;
+
+    @Transactional
+    @Override
+    public boolean addAddress(ana10 ana) {
+        try{
+            //对mysql数据库做更新操作后，影响的行数effecteNum
+            int effecteNum= anaMapper.addAddress(ana);
+
+            if(effecteNum>0){
+                //如果影响行数大于0，那么就是更新成功
+                System.out.println("更新成功，主键为："+ana.getName());
+                return true;
+            }else {
+                throw  new RuntimeException("更新信息失败,插入行数有误");
+            }
+        }catch (Exception e){
+            throw  new RuntimeException("更新信息失败了:"+e.getMessage());
+        }
+    }
 
     @Override
     public List<ana1> getAna1() { return anaMapper.getAna1(); }

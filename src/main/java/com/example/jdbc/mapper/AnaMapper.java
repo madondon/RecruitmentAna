@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface AnaMapper {
-
+    int addAddress(ana10 ana);
     List<ana1> getAna1();
     List<ana2> getAna2();
     List<ana3> getAna3();

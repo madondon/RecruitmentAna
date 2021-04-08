@@ -5,6 +5,8 @@ import com.example.jdbc.pojo.User;
 import java.util.List;
 
 public interface UserService {
+    //获取指定id信息
+    User getNumber(String number);
     //获取全部信息
     List<User> queryUserInfo();
     //获取指定id信息

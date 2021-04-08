@@ -2,7 +2,7 @@ package com.example.jdbc.pojo;
 
 public class ana9 {
     private String  name;
-    private int count;
+    private int value;
 
     public ana9() {}
 
@@ -14,11 +14,11 @@ public class ana9 {
         this.name = name;
     }
 
-    public double getCount() {
-        return count;
+    public int getValue() {
+        return value;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setValue(int value) {
+        this.value = value;
     }
 }

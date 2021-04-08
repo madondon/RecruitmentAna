@@ -7,6 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    User getNumber(String number) ;
     List<User> queryUserInfo() ;
     User getUserInfoById(int id) ;
     int updatePassword(User user);
