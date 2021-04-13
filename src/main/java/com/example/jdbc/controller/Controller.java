@@ -294,6 +294,8 @@ public class Controller {
          */
         @PostMapping("/addDelInfo")
         public String addDelInfo(@RequestBody Map<String, String> jobMap) {
+            String filePath="C:\\Users\\马东\\Desktop\\1.docx";
+            mailService.sendAttachmentsMail("a1224641706@163.com","带附件的邮件","有附件，请查收",filePath);
             Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             System.out.println(dateFormat.format(date));
@@ -346,6 +348,8 @@ public class Controller {
          */
         @PostMapping("/updateDelTime")
         public String updateDelTime(@RequestBody Map<String, String> jobMap) {
+            String filePath="C:\\Users\\马东\\Desktop\\1.docx";
+            mailService.sendAttachmentsMail("a1224641706@163.com","带附件的邮件","有附件，请查收",filePath);
             Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             System.out.println(dateFormat.format(date));
@@ -609,17 +613,25 @@ public class Controller {
                 return code;
             } catch (Exception e) {
                 e.printStackTrace();
-                return "该号码不存在，请检查号码";
+                return "fail";
             }
         }
 
     /**
      * 按照Id查询用户信息
      */
-    @GetMapping("/getUserInfoById/{id}")
-    public User getUserInfoById(@PathVariable("id") int id) {
-        return userService.getUserInfoById(id);
+    @GetMapping("/getUserByNumber/{num}")
+    public User getNumber(@PathVariable("num") String num) {
+        return userService.getNumber(num);
     }
+
+        /**
+         * 按照Id查询用户信息
+         */
+        @GetMapping("/getUserInfoById/{id}")
+        public User getUserInfoById(@PathVariable("id") int id) {
+            return userService.getUserInfoById(id);
+        }
 
     /**
      * 查询所有用户信息
